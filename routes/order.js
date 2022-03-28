@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const auth = require('../middlewares/auth');
 const {Order, validate} = require('../models/order');
 const {User} = require('../models/user');
 const express = require('express');
@@ -22,6 +23,19 @@ router.post('/buy', async(req, res) => {
     order = await order.save();
 
     res.send(order);
+});
+
+router.put('/me/:counter', auth, async(req, res) => {
+    const user = await User.findById(req.user._id);
+    let order = await Order.findOne({user_id: user._id}).sort([['_id', -1]]);
+    const substract = order.numberOfMessages - req.params.counter;
+    if(substract > 0){
+        order.numberOfMessages = substract;
+        order = await order.save();
+        res.send(order);
+    }else{
+        res.status(401).send('Exceeded!');
+    }
 });
 
 module.exports = router;
