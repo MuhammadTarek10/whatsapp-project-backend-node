@@ -19,7 +19,7 @@ const orderSchema = new mongoose.Schema({
     endDate: {
         type: Date,
         required: true,
-        default: Date.now()
+        default: Date.now
     },
     numberOfMessages: {
         type: Number,

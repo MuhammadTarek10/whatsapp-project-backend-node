@@ -26,8 +26,11 @@ router.post('/buy', async(req, res) => {
 
 router.put('/me/:counter', auth, async(req, res) => {
     const user = await User.findById(req.user._id);
+    if(!user) return res.status(404).send('No user for that id');
+
     let order = await Order.findOne({user_id: user._id}).sort([['_id', -1]]);
     if(!order) return res.status(404).send('No orders for that user');
+    
     const substract = order.numberOfMessages - req.params.counter;
     if(substract > 0){
         order.numberOfMessages = substract;

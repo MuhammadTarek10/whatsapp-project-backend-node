@@ -1,4 +1,4 @@
 {
-    "jwtPrivateKey": "whatsapp-private-key",
+    "jwtPrivateKey": "whatsapp-private-key-test",
     "db": "mongodb+srv://mongo:mongo@test-cluster.j08xo.mongodb.net/whatsapp-bulk-test"
 }
